@@ -1,0 +1,35 @@
+name: Build APK with p4a (WebView)
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip install --upgrade pip
+          pip install python-for-android
+
+      - name: Build APK
+        run: |
+          rm -rf .buildozer
+          p4a apk --private . --package=org.chesstrainer.app --name "ChessTrainer" --version 1.0 --bootstrap=webview --requirements=python3,flask,python-chess,requests,werkzeug,jinja2,markupsafe --port=5000 --android-api 33 --ndk-api 23
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChessTrainer-APK
+          path: *.apk
