@@ -28,7 +28,7 @@ source.exclude_dirs = tests, bin, venv, .venv, .git, .github, dist, build, __pyc
 version = 0.1.0
 
 # (list) Application requirements (comma separated)
-requirements = python3,kivy,flask,python-chess,requests,werkzeug,jinja2,markupsafe
+requirements = python3==3.9.0,kivy,flask,python-chess,requests,pyjnius,android,werkzeug,jinja2,markupsafe
 
 # (str) Supported orientation
 orientation = portrait
@@ -42,7 +42,7 @@ fullscreen = 0
 android.permissions = INTERNET
 android.api = 33
 android.minapi = 24
-android.ndk = 25b
+android.ndk = 23b
 android.accept_sdk_license = True
 android.archs = arm64-v8a, armeabi-v7a
 android.logcat_filters = *:S python:D
